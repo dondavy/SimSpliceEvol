@@ -1,0 +1,30 @@
+>cluster_1:(see phylogenies\phylo_5)
+transcript_5-4
+transcript_4-4
+
+>cluster_2:(see phylogenies\phylo_6)
+transcript_4-5
+transcript_5-5
+
+>cluster_3:(see phylogenies\phylo_3)
+transcript_6-2
+transcript_5-2
+transcript_4-2
+
+>cluster_4:(see phylogenies\phylo_4)
+transcript_5-3
+transcript_6-3
+transcript_4-3
+
+>cluster_5:(see phylogenies\phylo_1)
+transcript_6-0
+transcript_4-0
+transcript_5-0
+transcript_7-0
+
+>cluster_6:(see phylogenies\phylo_2)
+transcript_7-1
+transcript_5-1
+transcript_6-1
+transcript_4-1
+
