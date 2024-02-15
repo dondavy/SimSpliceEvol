@@ -61,6 +61,7 @@ The program was both developed and tested on a system operating Ubuntu version 1
 <h3 id="package"> :package: Graphical User Interface (GUI) and Webserver</h3>
 
 > Unzip the file ``application.zip`` and access the GUI ``simspliceevolv2GUI`` in the application folder..
+> ⚠️ It may take some time (not more than 15 seconds) to launch the program due to deploying the environment and the necessary modules to compute the program successfully. If any errors occur, feel free to contact us.
 
 > The webserver is available at [``https://simspliceevol.cobius.usherbrooke.ca/``](https://simspliceevol.cobius.usherbrooke.ca/)
 
