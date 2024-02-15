@@ -8,10 +8,10 @@
 <p align="center">
     <img src="./public/logo.png" alt="Image 2" style="width:600px; border: 5px solid green;">
 </p>
-<p align="center">
+<!--<p align="center">
   <img src="./public/relations_2.png" alt="Image 1" style="width:300px; margin-right: 40px; border: 5px solid red">
   <img src="./public/phylo_10.svg" alt="Image 2" style="width:300px; border: 5px solid orange; padding: 12px">
-</p>
+</p>>
 
 > :busts_in_silhouette: __Authors__* `Esaie Kuitche , Safa Jammali and Aïda Ouangraoua`, CoBIUS LAB, Department of Computer Science, Faculty of Science, Université de Sherbrooke, Sherbrooke, Canada*
 
