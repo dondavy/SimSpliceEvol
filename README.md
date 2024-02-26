@@ -1,4 +1,4 @@
-# :computer: SimSpliceEvol-v2: alternative splicing-aware simulation of biological sequence evolution and transcript phylogenies.
+# :computer: SimSpliceEvol2: alternative splicing-aware simulation of biological sequence evolution and transcript phylogenies.
 
 <!-- OVERVIEW -->
 <h3 id="overview"> Overview </h3>
