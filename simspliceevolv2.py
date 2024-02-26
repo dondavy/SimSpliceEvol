@@ -2,7 +2,7 @@
 import argparse
 import random
 import numpy as np
-from ete3 import Tree, TreeStyle, NodeStyle
+from ete3 import Tree, TreeStyle, NodeStyle, faces, TextFace
 import itertools
 import copy
 import os
@@ -1145,12 +1145,11 @@ def simulation_program(tree,
             )
     return tree, parent_transcripts_forest, lca_events
 
-def draw_transcripts_phylogenies(ttree, all_transcripts, lca_events, tree, tree_name, source, iteration_name):
-    ts = TreeStyle()
-    ts.scale = 120
-    ts.branch_vertical_margin = 50
-    ts.show_leaf_name = True
-    ts.show_scale = False
+def draw_transcripts_phylogenies(ttree, all_transcripts, lca_events, tree, tree_name, source, iteration_name, df_transcripts_to_alignments):
+    for n in ttree.traverse():
+        n.add_features(all_transcripts_remove=all_transcripts,
+                       lca_events_remove=lca_events,
+                       df_transcripts_to_alignments_remove = df_transcripts_to_alignments)
     for n in ttree.traverse():
         n.dist = 1
         if n.is_leaf():
@@ -1158,6 +1157,7 @@ def draw_transcripts_phylogenies(ttree, all_transcripts, lca_events, tree, tree_
             nstyle['size'] = 15
             nstyle['shape'] = 'sphere'
             transcript = n.name
+            #print(transcript)
             if transcript in all_transcripts:
                 nstyle['fgcolor'] = 'gold'
             else:
@@ -1181,11 +1181,90 @@ def draw_transcripts_phylogenies(ttree, all_transcripts, lca_events, tree, tree_
             elif event == 'es':
                 nstyle['fgcolor'] = 'limegreen' 
             else:
-                nstyle['fgcolor'] = 'white'
+                nstyle['fgcolor'] = 'black'
             n.set_style(nstyle)
-    ttree.render("./{}/{}/{}/{}.png".format(source, iteration_name, 'phylogenies', tree_name), w=183, units="mm", tree_style=ts)
-    ttree.render("./{}/{}/{}/{}.svg".format(source, iteration_name, 'phylogenies', tree_name), w=300, units="mm", tree_style=ts)
-    ttree.write(format=9, outfile="{}/{}/{}/{}.nwk".format(source, iteration_name, 'phylogenies', tree_name))        
+    ts = TreeStyle()
+    ts.scale = 120
+    ts.branch_vertical_margin = 50
+    ts.show_leaf_name = True
+    ts.show_scale = False
+
+    os_ttree_png = os.path.join(source, iteration_name, 'phylogenies', tree_name+'_w_msa_.png')
+    os_ttree_svg = os.path.join(source, iteration_name, 'phylogenies', tree_name+'_w_msa_.svg')
+    os_ttree_nwk = os.path.join(source, iteration_name, 'phylogenies', tree_name+'.nwk')
+    ttree.render(os_ttree_png, w=183, units="mm", tree_style=ts)
+    ttree.render(os_ttree_svg, w=300, units="mm", tree_style=ts)
+
+    tss = TreeStyle()
+    #tss.legend.add_face(TextFace("true alignment", fsize=5, ftype='courier'), column=0)
+    tss.layout_fn= ColorCodedNode
+    tss.scale = 120
+    tss.branch_vertical_margin = 50
+    tss.show_leaf_name = True
+    tss.show_scale = False
+    os_ttree_png = os.path.join(source, iteration_name, 'phylogenies', tree_name+'_msa_.png')
+    os_ttree_svg = os.path.join(source, iteration_name, 'phylogenies', tree_name+'_msa_.svg')
+    ttree.render(os_ttree_png, units="px", tree_style=tss)
+    ttree.render(os_ttree_svg, units="mm", tree_style=tss)
+
+
+    
+    
+    ttree.write(format=9, outfile=os_ttree_nwk)
+
+def ColorCodedNode(n):
+    all_transcripts = n.all_transcripts_remove
+    df_transcripts_to_alignments = n.df_transcripts_to_alignments_remove
+    lca_events = n.lca_events_remove
+    n.dist = 1
+    if n.is_leaf():
+        nstyle = NodeStyle()
+        nstyle['size'] = 15
+        nstyle['shape'] = 'sphere'
+        transcript = n.name
+        #print(transcript)
+        if transcript in all_transcripts:
+            nstyle['fgcolor'] = 'gold'
+        else:
+            nstyle['fgcolor'] = 'lightgrey'
+        
+
+        if transcript in df_transcripts_to_alignments.keys():
+            alignment_seq = df_transcripts_to_alignments[transcript]
+            #faces.add_face(alignment_seq, 0, "aligned")
+            seqFace = faces.SeqMotifFace(alignment_seq, gapcolor='black', fgcolor='red')
+            n.add_face(seqFace, 0, "aligned")
+        else:
+            pass
+        n.set_style(nstyle)
+    else:
+        nstyle = NodeStyle()
+        nstyle['size'] = 15
+        nstyle['shape'] = 'sphere'
+        node_name = n.name
+        nstyle["hz_line_color"] = "black"
+        event = lca_events[node_name]
+        if event == 'ir': 
+            nstyle['fgcolor'] = 'red'
+        elif event == 'me':
+            nstyle['fgcolor'] = 'orange' 
+        elif event == '5ss':
+            nstyle['fgcolor'] = 'violet'
+        elif event == '3ss':
+            nstyle['fgcolor'] = 'mediumblue' 
+        elif event == 'es':
+            nstyle['fgcolor'] = 'limegreen' 
+        else:
+            nstyle['fgcolor'] = 'black'
+        n.set_style(nstyle)
+    '''
+    os_ttree_png = os.path.join(source, iteration_name, 'phylogenies', tree_name+'.png')
+    os_ttree_svg = os.path.join(source, iteration_name, 'phylogenies', tree_name+'.svg')
+    os_ttree_nwk = os.path.join(source, iteration_name, 'phylogenies', tree_name+'.nwk')
+    ttree.render(os_ttree_png, w=183, units="mm", tree_style=ts)
+    ttree.render(os_ttree_svg, w=300, units="mm", tree_style=ts)
+    ttree.write(format=9, outfile=os_ttree_nwk)
+    '''     
     return True
 
 def get_msa_and_clusters(tree, forest, lca_events, source, iteration_name):
@@ -1239,6 +1318,7 @@ def get_msa_and_clusters(tree, forest, lca_events, source, iteration_name):
             else:
                 raise('Errors')
     # retrieve the msa of transcripts
+    df_transcripts_to_alignments = {}
     file = open('./{}/{}/{}/msa_transcripts.alg'.format(source, iteration_name, 'multiple_alignments'), 'w')
     for iter, row in df.iterrows():
         sequence = []
@@ -1246,7 +1326,7 @@ def get_msa_and_clusters(tree, forest, lca_events, source, iteration_name):
             tmp_seq = row[exon]
             sequence.append(tmp_seq)
         sequence_alg = ''.join(sequence)
-        
+        df_transcripts_to_alignments[row.id_transcript] = sequence_alg
         file.write('>{}\n{}\n'.format(row.id_transcript, sequence_alg))
     file.close()
     
@@ -1287,7 +1367,7 @@ def get_msa_and_clusters(tree, forest, lca_events, source, iteration_name):
             for leaf in leaves:
                 dict_forest[leaf] = tree_name
             if len(leaves) >= 2:
-                draw_transcripts_phylogenies(ttree, all_transcripts, lca_events, tree, tree_name, source, iteration_name)
+                draw_transcripts_phylogenies(ttree, all_transcripts, lca_events, tree, tree_name, source, iteration_name, df_transcripts_to_alignments)
         
     #save the clusters into file
     file_save_clusters = open('./{}/{}/{}/ortholog_groups.clusters'.format(source, iteration_name, 'clusters'), 'w')
