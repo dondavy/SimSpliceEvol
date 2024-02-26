@@ -64,7 +64,7 @@ The program was both developed and tested on a system operating Ubuntu version 1
 
 >>> ⚠️ It may take some time (not more than 15 seconds) to launch the program due to deploying the environment and the necessary modules to compute the program successfully. If any errors occur, feel free to contact us.
 
-> The webserver is available at [``https://simspliceevol.cobius.usherbrooke.ca/``](https://simspliceevol.cobius.usherbrooke.ca/)
+> The webserver and the GUI are available at [``https://simspliceevol.cobius.usherbrooke.ca/``](https://simspliceevol.cobius.usherbrooke.ca/)
 
 ![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
