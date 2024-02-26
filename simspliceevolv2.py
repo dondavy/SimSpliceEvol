@@ -1,3 +1,26 @@
+""" SimSpliceEvol is a tool designed to simulate the evolution of sets of alternative transcripts along the branches of an input gene tree. In addition to traditional sequence evolution events, the simulation also incorporates events related to the evolution of gene exon-intron structures and alternative splicing. These events modify the sets of transcripts produced from genes. Data generated using SimSpliceEvol is valuable for testing spliced RNA sequence analysis methods, including spliced alignment of cDNA and genomic sequences, multiple cDNA alignment, identification of orthologous exons, splicing orthology inference, and transcript phylogeny inference. These tests are essential for methods that require knowledge of the real evolutionary relationships between the sequences.
+> Usage:
+======
+    python3 simspliceevolv2.py [-h] -i INPUT_TREE_FILE [-it ITERATIONS]
+                          [-dir_name DIRECTORY_NAME] [-eic_el EIC_EL]
+                          [-eic_ed EIC_ED] [-eic_eg EIC_EG] [-c_i C_I]
+                          [-c_d C_D] [-k_nb_exons K_NB_EXONS] [-k_eic K_EIC]
+                          [-k_indel K_INDEL] [-k_tc K_TC]
+                          [-tc_a5 ALTERNATIVE_FIVE_PRIME]
+                          [-tc_a3 ALTERNATIVE_THREE_PRIME]
+                          [-tc_es EXON_SKIPPING] [-tc_me MUTUALLY_EXCLUSIVE]
+                          [-tc_ir INTRON_RETENTION] [-tc_tl TRANSCRIPT_LOSS]
+> Reference:
+======
+    https://github.com/dondavy/SimSpliceEvol
+"""
+__authors__ = ("Wend Yam Donald Davy Ouedraogo")
+__contact__ = ("wend.yam.donald.davy.usherbrooke.ca")
+__copyright__ = "CoBIUS lab at Université de Sherbrooke, QC, CANADA"
+__date__ = "2024-02-26"
+__version__= "2.0.2"
+__previousAuthor__ = ("Esaie Kuitche, PhD-2019")
+
 
 import argparse
 import random
@@ -2103,11 +2126,11 @@ if __name__ == '__main__':
     
     #inputs = [SRC, ITERATION_NAME, TREE_INPUT, K_NB_EXONS, K_INDEL, C_I, C_D, EIC_ED, EIC_EG, EIC_EL, K_EIC, K_TC, TC_RS, TC_A3, TC_A5, TC_ME, TC_ES, TC_IR, TC_TL]
 
-    simspliceevol(SRC, ITERATION_NAME, TREE_INPUT, K_NB_EXONS, K_INDEL, C_I, C_D, EIC_ED, EIC_EG, EIC_EL, K_EIC, K_TC, TC_RS, TC_A3, TC_A5, TC_ME, TC_ES, TC_IR, TC_TL)
+    #simspliceevol(SRC, ITERATION_NAME, TREE_INPUT, K_NB_EXONS, K_INDEL, C_I, C_D, EIC_ED, EIC_EG, EIC_EL, K_EIC, K_TC, TC_RS, TC_A3, TC_A5, TC_ME, TC_ES, TC_IR, TC_TL)
     
-    '''try:
+    try:
         simspliceevol(SRC, ITERATION_NAME, TREE_INPUT, K_NB_EXONS, K_INDEL, C_I, C_D, EIC_ED, EIC_EG, EIC_EL, K_EIC, K_TC, TC_RS, TC_A3, TC_A5, TC_ME, TC_ES, TC_IR, TC_TL)
         successful_message()
     except:
-        error_message()'''
+        error_message()
         
